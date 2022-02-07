@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -23,7 +24,7 @@ class AuthController extends Controller
                 $token = $user->createToken('authToken')->plainTextToken;
                 $user->token = $token;
                 $user->status = 200;
-                return $user;
+                return new UserResource($user);
             }else{
                 return response()->json([
                     'message'=>'Password not match',
@@ -46,8 +47,7 @@ class AuthController extends Controller
             ]);
             $token = $user->createToken('authToken')->plainTextToken;
             $user->token = $token;
-            $user->status = 201;
-            return $user;
+            return new UserResource($user);
         } catch (\Throwable $th) {
             return response()->json([
                 'message'=>'something error',
