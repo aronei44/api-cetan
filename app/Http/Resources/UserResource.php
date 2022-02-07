@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email_verified_at'=>$this->email_verified_at != null ?$this->email_verified_at->diffForHumans() : null,
             'token'=>$this->token,
             'created_at'=>$this->created_at->diffForHumans(),
+            'bio'=>$this->bio,
             'id'=>$this->id,
         ];
     }
