@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Image;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -22,6 +23,7 @@ class UserResource extends JsonResource
             'created_at'=>$this->created_at->diffForHumans(),
             'bio'=>$this->bio,
             'id'=>$this->id,
+            'images'=>ImageResource::collection(Image::where('user_id',$this->id)->get()),
         ];
     }
 }
