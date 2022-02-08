@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class,'register']);
+Route::post('/user',[RoomController::class,'getUser']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
 
@@ -31,5 +32,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/room',[RoomController::class,'store']);
     Route::get('/room',[RoomController::class,'index']);
     Route::get('/room/{room}',[RoomController::class,'show']);
+
+
     Route::post('/message',[RoomController::class,'storeMessage']);
+
+
 });

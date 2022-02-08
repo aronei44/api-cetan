@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Resources\RoomResource;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\MessageResource;
 
 class RoomController extends Controller
@@ -75,5 +77,13 @@ class RoomController extends Controller
             'body' => $request->message,
         ]);
         return new MessageResource($message);
+    }
+    public function getUser(Request $request)
+    {
+        $request->validate([
+            'email'=>'required|email',
+        ]);
+        $user = User::where('email', $request->email)->first();
+        return new UserResource($user);
     }
 }
