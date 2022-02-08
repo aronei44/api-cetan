@@ -54,7 +54,8 @@ class AuthController extends Controller
             ],500);
         }
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
         try {
             $tokens = \DB::select("DELETE FROM personal_access_tokens WHERE tokenable_id = " .$request->user()->id);
@@ -67,7 +68,18 @@ class AuthController extends Controller
             ],400);
         }
     }
-    public function getUser(Request $request){
+    public function getUser(Request $request)
+    {
         return new UserResource($request->user());
+    }
+    public function updateBio(Request $request)
+    {
+        $request->validate([
+            'bio'=>'required|string',
+        ]);
+        $user = $request->user();
+        $user->bio = $request->bio;
+        $user->save();
+        return new UserResource($user);
     }
 }

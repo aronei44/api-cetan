@@ -38,4 +38,5 @@ Route::middleware('auth:sanctum')->group(function(){
 
 
     Route::get('/user',[AuthController::class,'getUser']);
+    Route::put('/bio',[AuthController::class,'updateBio']);
 });
