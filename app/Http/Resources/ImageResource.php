@@ -16,7 +16,7 @@ class ImageResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'image_url'=>$this->id,
+            'image_url'=>$this->image_url,
             'primary'=>$this->primary,
             'created_at'=>$this->created_at->diffForHumans(),
         ];
