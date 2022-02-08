@@ -20,9 +20,16 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login',[AuthController::class,'login']);
 Route::post('/register',[AuthController::class,'register']);
 Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/logout',[AuthController::class,'logout']);
+
+
     Route::get('/image',[ImageController::class,'index']);
     Route::post('/image',[ImageController::class,'store']);
     Route::put('/image/{image}',[ImageController::class,'update']);
     Route::delete('/image/{image}',[ImageController::class,'destroy']);
-    Route::post('/logout',[AuthController::class,'logout']);
+
+    Route::post('/room',[RoomController::class,'store']);
+    Route::get('/room',[RoomController::class,'index']);
+    Route::get('/room/{room}',[RoomController::class,'show']);
+    Route::post('/message',[RoomController::class,'storeMessage']);
 });
