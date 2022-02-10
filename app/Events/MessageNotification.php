@@ -24,6 +24,7 @@ class MessageNotification implements ShouldBroadcast
     {
         $this->room = $data->room_id;
         $this->to = $data->to;
+        $this->id = $data->id;
     }
 
     /**
