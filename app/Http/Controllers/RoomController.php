@@ -60,6 +60,7 @@ class RoomController extends Controller
             $message->seen = true;
             $message->save();
         }
+        event(new MessageNotification(Message::orderBy('id','desc')->where('room_id', $room->id)->where('to',auth()->user()->id)->first()));
         return new RoomResource($room);
     }
     public function storeMessage(Request $request)
