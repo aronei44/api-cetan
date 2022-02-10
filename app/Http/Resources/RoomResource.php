@@ -21,7 +21,7 @@ class RoomResource extends JsonResource
             'self'=>new UserResource(User::find(auth()->user()->id)),
             'opponent'=>new UserResource($this->user_id_1 === auth()->user()->id ? User::find($this->user_id_2): User::find($this->user_id_1)),
             'created_at'=>$this->created_at->diffForHumans(),
-            'messages'=>MessageResource::collection(Message::orderBy('id','desc')->where('room_id', $this->id)->get()),
+            'messages'=>MessageResource::collection(Message::orderBy('id','asc')->where('room_id', $this->id)->get()),
         ];
     }
 }
