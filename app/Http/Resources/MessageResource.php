@@ -19,6 +19,7 @@ class MessageResource extends JsonResource
             'from'=>$this->from,
             'to'=>$this->to,
             'message'=>$this->body,
+            'seen'=>$this->seen,
             'created_at'=>$this->created_at->diffForHumans(),
         ];
     }

@@ -56,6 +56,10 @@ class RoomController extends Controller
         if($room->user_id_1 !== auth()->user()->id && $room->user_id_2 !== auth()->user()->id){
             return response()->json(['message' => 'You are not in this room.'], 403);
         }
+        foreach(Message::orderBy('id','asc')->where('room_id', $room->id)->where('to',auth()->user()->id)->get() as $message){
+            $message->seen = true;
+            $message->save();
+        }
         return new RoomResource($room);
     }
     public function storeMessage(Request $request)
