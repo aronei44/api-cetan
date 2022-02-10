@@ -19,7 +19,7 @@ class MessageNotification implements ShouldBroadcast
      *
      * @return void
      */
-    public $room, $to;
+    public $room, $to, $id;
     public function __construct($data)
     {
         $this->room = $data->room_id;
