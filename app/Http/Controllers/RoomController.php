@@ -6,6 +6,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Events\MessageNotification;
 use App\Http\Resources\RoomResource;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\MessageResource;
@@ -76,6 +77,7 @@ class RoomController extends Controller
             'to' => $room->user_id_1 === auth()->user()->id ? $room->user_id_2 : $room->user_id_1,
             'body' => $request->message,
         ]);
+        event(new MessageNotification($message));
         return new MessageResource($message);
     }
     public function getUser(Request $request)
