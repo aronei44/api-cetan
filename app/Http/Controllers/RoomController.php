@@ -29,9 +29,6 @@ class RoomController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
-            'id' => 'required|integer',
-        ]);
         if($request->id === auth()->user()->id){
             return response()->json(['message' => 'You cannot create a room with yourself.'], 403);
         }
