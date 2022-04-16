@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use App\Http\Requests\ImageRequest;
 use App\Http\Resources\ImageResource;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,11 +14,8 @@ class ImageController extends Controller
     {
         return ImageResource::collection(Image::where('user_id', $request->user()->id)->get());
     }
-    public function store(Request $request)
+    public function store(ImageRequest $request)
     {
-        $request->validate([
-            'image'=>'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
         try {
             $image = $request->image->store('','google');
             $url = Storage::disk('google')->url($image);
