@@ -9,7 +9,10 @@ use Illuminate\Http\Request;
 use App\Events\MessageNotification;
 use App\Http\Resources\RoomResource;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\GetUserRequest;
 use App\Http\Resources\MessageResource;
+use App\Http\Requests\CreateRoomRequest;
+use App\Http\Requests\StoreMessageRequest;
 
 class RoomController extends Controller
 {
@@ -27,7 +30,7 @@ class RoomController extends Controller
         }
         return $rooms;
     }
-    public function store(Request $request)
+    public function store(CreateRoomRequest $request)
     {
         if($request->id === auth()->user()->id){
             return response()->json(['message' => 'You cannot create a room with yourself.'], 403);
@@ -60,7 +63,7 @@ class RoomController extends Controller
         event(new MessageNotification(Message::orderBy('id','desc')->where('room_id', $room->id)->where('from',auth()->user()->id)->first()));
         return new RoomResource($room);
     }
-    public function storeMessage(Request $request)
+    public function storeMessage(StoreMessageRequest $request)
     {
         $room = Room::find($request->room_id);
         if(!$room){
@@ -78,11 +81,8 @@ class RoomController extends Controller
         event(new MessageNotification($message));
         return new MessageResource($message);
     }
-    public function getUser(Request $request)
+    public function getUser(GetUserRequest $request)
     {
-        $request->validate([
-            'email'=>'required|email',
-        ]);
         $user = User::where('email', $request->email)->first();
         return new UserResource($user);
     }
