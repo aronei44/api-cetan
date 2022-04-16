@@ -62,10 +62,6 @@ class RoomController extends Controller
     }
     public function storeMessage(Request $request)
     {
-        $request->validate([
-            'room_id' => 'required|integer',
-            'message' => 'required|string',
-        ]);
         $room = Room::find($request->room_id);
         if(!$room){
             return response()->json(['message' => 'Room not found.'], 404);
