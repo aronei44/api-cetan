@@ -4,16 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\BioRequest;
+use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email'=>'required',
-            'password'=>'required|min:8',
-        ]);
         $user = User::where('email',$request->email)->first();
         if(!$user){
             return response()->json([
@@ -32,13 +31,8 @@ class AuthController extends Controller
             }
         }
     }
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $request->validate([
-            'name'=>'required',
-            'email'=>'required|email:dns|unique:users',
-            'password'=>'required|min:8',
-        ]);
         try {
             $user = User::create([
                 'name'=>$request->name,
@@ -72,11 +66,8 @@ class AuthController extends Controller
     {
         return new UserResource($request->user());
     }
-    public function updateBio(Request $request)
+    public function updateBio(BioRequest $request)
     {
-        $request->validate([
-            'bio'=>'required|string',
-        ]);
         $user = $request->user();
         $user->bio = $request->bio;
         $user->save();
